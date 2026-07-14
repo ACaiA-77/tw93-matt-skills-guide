@@ -33,3 +33,13 @@ test('filterSkills searches each documented field', () => {
   assert.deepEqual(filterSkills(skills, 'stable').map((skill) => skill.name), ['think', 'tdd']);
   assert.deepEqual(filterSkills(skills, '纯重构').map((skill) => skill.name), ['tdd']);
 });
+
+test('filterSkills returns original array for empty query', () => {
+  assert.equal(filterSkills(skills, ''), skills);
+  assert.equal(filterSkills(skills, '   '), skills);
+  assert.equal(filterSkills(skills, undefined), skills);
+});
+
+test('filterSkills returns empty array for unmatched Chinese query', () => {
+  assert.deepEqual(filterSkills(skills, '不存在的技能关键词'), []);
+});
