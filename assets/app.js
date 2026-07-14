@@ -42,6 +42,10 @@ function statusLabel(status) {
   return STATUS_LABELS[status] ?? String(status ?? '');
 }
 
+export function statusClassName(status) {
+  return `skill-status status-${status}`;
+}
+
 function createCard(skill, openDetail) {
   const article = document.createElement('article');
   article.className = 'skill-card';
@@ -56,7 +60,7 @@ function createCard(skill, openDetail) {
   article.appendChild(meta);
 
   const status = document.createElement('span');
-  status.className = 'skill-status';
+  status.className = statusClassName(skill.status);
   status.textContent = statusLabel(skill.status);
   article.appendChild(status);
 

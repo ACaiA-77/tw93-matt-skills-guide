@@ -206,8 +206,9 @@ p { margin: 0 0 1rem; }
   font-size: 0.92rem;
 }
 
-/* status badge base. app.js emits class="skill-status" with a text label;
-   per-status classes below are forward-compatible and pair color with text. */
+/* status badge base. app.js emits class="skill-status status-${status}"
+   with a Chinese text label; per-status classes below activate the
+   status-specific colors and always pair color with text. */
 .status,
 .skill-status {
   align-self: flex-start;
@@ -218,13 +219,10 @@ p { margin: 0 0 1rem; }
   font-weight: 600;
   line-height: 1.5;
   border-radius: 999px;
-  border: 1px solid transparent;
-  white-space: nowrap;
-}
-.status { /* default badge look */
+  border: 1px solid var(--line);
   background: var(--surface-alt);
   color: var(--navy);
-  border-color: var(--line);
+  white-space: nowrap;
 }
 .status-deprecated {
   background: #fbeae6;

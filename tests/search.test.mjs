@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { filterSkills, normalizeQuery } from '../assets/app.js';
+import { readFile } from 'node:fs/promises';
+import { filterSkills, normalizeQuery, statusClassName } from '../assets/app.js';
 
 const skills = [
   {
@@ -42,4 +43,14 @@ test('filterSkills returns original array for empty query', () => {
 
 test('filterSkills returns empty array for unmatched Chinese query', () => {
   assert.deepEqual(filterSkills(skills, '不存在的技能关键词'), []);
+});
+
+test('statusClassName creates a base and status-specific class', () => {
+  assert.equal(statusClassName('deprecated'), 'skill-status status-deprecated');
+  assert.equal(statusClassName('in-progress'), 'skill-status status-in-progress');
+});
+
+test('skill-status receives the base badge colors', async () => {
+  const css = await readFile(new URL('../assets/styles.css', import.meta.url), 'utf8');
+  assert.match(css, /\.status,\s*\.skill-status\s*\{[\s\S]*border:\s*1px solid var\(--line\);[\s\S]*background:\s*var\(--surface-alt\);[\s\S]*color:\s*var\(--navy\);/);
 });
