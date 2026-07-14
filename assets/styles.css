@@ -1,0 +1,380 @@
+/* ==========================================================================
+   Skills Atlas — editorial knowledge-base styles
+   Direction A: warm-white paper, navy heading/header, gold details.
+   ========================================================================== */
+
+:root {
+  /* palette */
+  --paper: #faf7f0;          /* warm-white page */
+  --surface: #ffffff;        /* card surface */
+  --surface-alt: #f4efe3;    /* subtle alt surface */
+  --navy: #1d2a44;           /* headings + header */
+  --navy-soft: #2c3a5a;      /* secondary navy */
+  --muted: #5d6573;          /* muted text */
+  --line: #e4dcc8;           /* hairline borders */
+  --gold: #b0832f;           /* primary gold accent */
+  --gold-soft: #d9b46a;      /* soft gold */
+  --focus: #1f4e8a;          /* accessible focus ring */
+
+  /* status accents (paired with a text label, never color-only) */
+  --status-stable: #2f6f4f;
+  --status-progress: #b0832f;
+  --status-personal: #6a4a93;
+  --status-misc: #4a6a8a;
+  --status-deprecated: #a23b2f;
+
+  /* shape + motion */
+  --radius: 8px;
+  --radius-sm: 5px;
+  --control-h: 44px;         /* min control height */
+  --maxw: 900px;              /* desktop reading column */
+  --transition: 160ms ease;
+  --shadow-card: 0 1px 2px rgba(29, 42, 68, 0.06), 0 4px 14px rgba(29, 42, 68, 0.05);
+  --font-sans: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Noto Sans CJK SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Songti SC", "Noto Serif CJK SC", Georgia, "Times New Roman", serif;
+}
+
+/* ----- reset ----- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--navy);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--navy); }
+
+h1, h2, h3 {
+  color: var(--navy);
+  font-family: var(--font-serif);
+  line-height: 1.25;
+  margin: 0;
+}
+
+p { margin: 0 0 1rem; }
+
+/* ----- skip link (focus-only affordance) ----- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--navy);
+  color: #fff;
+  border-radius: 0 0 var(--radius-sm) 0;
+}
+.skip-link:focus {
+  left: 0;
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ----- header ----- */
+.site-header {
+  background: var(--navy);
+  color: #fff;
+  border-bottom: 4px solid var(--gold); /* gold header underline */
+}
+.site-header__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 2.25rem 1.25rem 2rem;
+}
+.byline {
+  color: var(--gold-soft);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+.site-title {
+  color: #fff;
+  font-size: clamp(1.9rem, 5vw, 2.75rem);
+  margin: 0 0 0.6rem;
+}
+.site-intro {
+  color: #dfe4ee;
+  max-width: 52ch;
+  margin: 0 0 1.1rem;
+}
+.source-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.1rem;
+}
+.source-links a {
+  color: var(--gold-soft);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(217, 180, 106, 0.45);
+  padding-bottom: 1px;
+}
+.source-links a:hover { color: #fff; border-bottom-color: #fff; }
+
+/* ----- page + sections ----- */
+.page {
+  max-width: var(--maxw);          /* desktop reading column limited to 900px */
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+.section-heading {
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  margin: 0 0 0.85rem;
+}
+
+.search-section { margin-bottom: 2.25rem; }
+
+.search { display: block; }
+.search-label {
+  display: block;
+  color: var(--navy);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.search-input {
+  width: 100%;
+  min-height: var(--control-h);     /* >= 44px */
+  padding: 0.6rem 0.85rem;
+  font: inherit;
+  color: var(--navy);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.search-input::placeholder { color: var(--muted); opacity: 1; }
+.search-input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-color: var(--focus);
+}
+
+.result-count {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* ----- results ----- */
+.results-section__head { margin-bottom: 1.25rem; }
+.results-hint { color: var(--muted); margin: 0; }
+
+.results-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+}
+
+/* ----- skill cards (created by app.js) ----- */
+.skill-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--gold); /* gold left card accent */
+  border-radius: var(--radius);
+  padding: 1.1rem 1.15rem 1.25rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.skill-card > h3 {            /* skill name (app.js emits an <h3>) */
+  font-size: 1.2rem;
+  margin: 0;
+}
+.skill-name { font-size: 1.2rem; } /* forward-compatible selector */
+
+.skill-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.card-summary {               /* forward-compatible selector */
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* status badge base. app.js emits class="skill-status" with a text label;
+   per-status classes below are forward-compatible and pair color with text. */
+.status,
+.skill-status {
+  align-self: flex-start;
+  display: inline-block;
+  min-height: 26px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.5;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.status { /* default badge look */
+  background: var(--surface-alt);
+  color: var(--navy);
+  border-color: var(--line);
+}
+.status-deprecated {
+  background: #fbeae6;
+  color: var(--status-deprecated);
+  border-color: #e9c4bd;
+}
+.status-in-progress {
+  background: #fbf1df;
+  color: var(--status-progress);
+  border-color: #ecd3a6;
+}
+.status-personal {
+  background: #f1eaf7;
+  color: var(--status-personal);
+  border-color: #d8c7e6;
+}
+.status-misc {
+  background: #e9eff6;
+  color: var(--status-misc);
+  border-color: #c4d2e0;
+}
+
+.skill-description {
+  margin: 0;
+  color: var(--navy-soft);
+}
+.skill-recommended,
+.skill-recommendation {        /* app.js emits .skill-recommendation */
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* expand control */
+.expand-button {
+  align-self: flex-start;
+  min-height: var(--control-h);   /* >= 44px */
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--navy);
+  border: 1px solid var(--navy);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+.expand-button:hover { background: var(--navy-soft); }
+.expand-button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.expand-button[aria-expanded="true"] { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+.skill-details {
+  margin-top: 0.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--line);
+}
+.skill-details[hidden] { display: none; }
+.skill-details p { margin: 0 0 0.6rem; font-size: 0.95rem; }
+.skill-details a {
+  color: var(--gold);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+.skill-details a:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.detail-row {                  /* forward-compatible selector */
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ----- state / error messages ----- */
+.state-message {
+  margin: 1.25rem 0 0;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  border: 1px solid var(--line);
+  color: var(--navy);
+}
+.state-message[hidden] { display: none; }
+.empty-state { text-align: center; }
+.empty-state p { margin: 0 0 0.85rem; }
+.error-message {
+  background: #fbeae6;
+  border-color: #e9c4bd;
+  color: var(--status-deprecated);
+  font-weight: 600;
+}
+.clear-button {
+  min-height: var(--control-h);   /* >= 44px */
+  padding: 0.5rem 1.1rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--surface);
+  border: 1px solid var(--navy);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.clear-button:hover { background: var(--surface-alt); }
+.clear-button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ----- footer ----- */
+.site-footer {
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+}
+.site-footer__inner,
+.site-footer p {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+/* ----- responsive: no horizontal scroll at 320px ----- */
+@media (max-width: 560px) {
+  .site-header__inner { padding: 1.75rem 1rem 1.5rem; }
+  .page { padding: 1.5rem 1rem 2.5rem; }
+  .results-list {
+    grid-template-columns: minmax(0, 1fr); /* single column, fits 320px */
+  }
+  .source-links { gap: 0.4rem 0.9rem; }
+  .skill-card { padding: 1rem; }
+  .site-footer p { padding: 1.25rem 1rem; }
+}
+
+/* ----- reduced motion ----- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
